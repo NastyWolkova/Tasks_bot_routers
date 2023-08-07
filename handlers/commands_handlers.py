@@ -9,7 +9,7 @@ router: Router = Router()
 @router.message(Command(commands=['start']))
 async def command_start(message: Message):
     if message.from_user.id not in users:
-        #запуск игры
+        #запуск теста
         dt1 = datetime.datetime.today()
         dt2 = dt1 + datetime.timedelta(minutes=3)
         users[message.from_user.id] = {'current_task': 0,

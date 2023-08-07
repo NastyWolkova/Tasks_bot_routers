@@ -27,7 +27,6 @@ async def get_answer(message: Message):
                 delta_time = users[message.from_user.id]["finish_time"] - datetime.datetime.today()
                 if users[message.from_user.id]['current_task'] == list(tasks.keys())[-1]:
                     users[message.from_user.id]['current_task'] = 0
-                    print(users)
                     await message.answer(f'{answers["last_task"]} {users[message.from_user.id]["total_score"]}'
                                          f'\nВремя тестирования: {str(delta_time).split(":")[1].lstrip("0")} мин. {round(float(str(delta_time).split(":")[-1]))} сек.')
                 else:

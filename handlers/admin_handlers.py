@@ -20,17 +20,11 @@ router: Router = Router()
 router.message.filter(F.from_user.id == admin)
 
 @router.message(Command(commands=['stat']))
-async def command_stat(message:Message):
+async def command_stat(message: Message):
     await message.answer(f'Data of players: \n{result_dict(users)}')
 
 # @router.message(Command(commands=['cancel']))
-# async def command_cancel(message:Message):
-#     users: dict = {1111111: {'current_task': 1,
-#                              'total_score': 0,
-#                              'start_time': 35,
-#                              'finish_time': 48,
-#                              1: 0,
-#                              2: 0,
-#                              3: 0}}
+# async def command_cancel(message: Message):
+#     users: dict = {}
 #     await message.answer(f'Data of players: \n{result_dict(users)}')
 
