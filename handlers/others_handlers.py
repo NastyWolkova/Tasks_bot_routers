@@ -5,6 +5,16 @@ import datetime
 
 router: Router = Router()
 
+def conv_time(my_time: datetime.timedelta) -> str:
+    minute = str(my_time).split(":")[1].lstrip("0")
+    sec = round(float(str(my_time).split(":")[-1]))
+    if minute:
+        out_time: str = f'{minute} мин. {sec} сек.'
+    else:
+        out_time: str = f'{sec} сек.'
+    return out_time
+
+
 @router.message(lambda x: x.text and x.text.isdigit())
 async def get_answer(message: Message):
     if message.from_user.id not in users:
@@ -29,12 +39,13 @@ async def get_answer(message: Message):
                 if users[message.from_user.id]['current_task'] == list(tasks.keys())[-1]:
                     users[message.from_user.id]['current_task'] = 0
                     await message.answer(f'{answers["last_task"]} {users[message.from_user.id]["total_score"]}'
-                                         f'\nВремя тестирования: {str(elapsed_time).split(":")[1].lstrip("0")} мин. {round(float(str(elapsed_time).split(":")[-1]))} сек.')
+                                         f'\nВремя тестирования: {conv_time(elapsed_time)}')
                 else:
                     #send next task
                     users[message.from_user.id]['current_task'] += 1
                     await message.answer(f'{answers["next_task"]} {users[message.from_user.id]["current_task"]}:\n{tasks[users[message.from_user.id]["current_task"]][0]}'
-                                         f'\nУ вас осталось: {str(spare_time).split(":")[1].lstrip("0")} мин. {round(float(str(spare_time).split(":")[-1]))} сек.')
+                                         f'\nУ вас осталось: {conv_time(spare_time)}')
+
 
 @router.message()
 async def send_task(message: Message):
