@@ -23,8 +23,5 @@ router.message.filter(F.from_user.id == admin)
 async def command_stat(message: Message):
     await message.answer(f'Data of players: \n{result_dict(users)}')
 
-# @router.message(Command(commands=['cancel']))
-# async def command_cancel(message: Message):
-#     users: dict = {}
-#     await message.answer(f'Data of players: \n{result_dict(users)}')
+
 

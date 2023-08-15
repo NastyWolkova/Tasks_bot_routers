@@ -1,12 +1,13 @@
 from aiogram import Router
+from aiogram.filters import CommandStart, Text, or_f
 from aiogram.types import Message
-from aiogram.filters import Command
 from lexicon.lexicon import users, tasks, answers
 import datetime
 
 router: Router = Router()
 
-@router.message(Command(commands=['start']))
+
+@router.message(or_f(Text(text='Старт'), CommandStart()))
 async def command_start(message: Message):
     if message.from_user.id not in users:
         #запуск теста
@@ -33,6 +34,6 @@ async def command_start(message: Message):
                 await message.answer(f"{answers['into_game']}")
 
 
-@router.message(Command(commands=['help']))
+@router.message(Text(text='Правила'))
 async def command_help(message: Message):
     await message.answer(f"{answers['help']}")
