@@ -1,6 +1,6 @@
 from aiogram import Router
 from aiogram.types import Message
-from keyboards import kb_builder
+from keyboards import keyboard
 from lexicon.lexicon import users, tasks, answers
 import datetime
 import surrogates
@@ -22,7 +22,7 @@ def conv_time(my_time: datetime.timedelta) -> str:
 @router.message(lambda x: x.text and x.text.isdigit())
 async def get_answer(message: Message):
     if message.from_user.id not in users:
-        await message.answer(f'{answers["not in users"]} {arrow}', reply_markup=kb_builder)
+        await message.answer(f'{answers["not in users"]} {arrow}', reply_markup=keyboard)
     else:
         if users[message.from_user.id]['current_task'] == 0:
             await message.answer(f"{answers['game_over']} {users[message.from_user.id]['total_score']}")
@@ -54,7 +54,7 @@ async def get_answer(message: Message):
 @router.message()
 async def send_task(message: Message):
     if message.from_user.id not in users:
-        await message.answer(f'{answers["not in users"]} {arrow}', reply_markup=kb_builder)
+        await message.answer(f'{answers["not in users"]} {arrow}', reply_markup=keyboard)
     else:
         if users[message.from_user.id]['current_task'] == 0:
             await message.answer(f"{answers['game_over']} {users[message.from_user.id]['total_score']}")

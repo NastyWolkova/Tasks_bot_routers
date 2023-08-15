@@ -3,6 +3,10 @@ from aiogram.filters import CommandStart, Text, or_f
 from aiogram.types import Message
 from lexicon.lexicon import users, tasks, answers
 import datetime
+from keyboards import keyboard
+import surrogates
+
+arrow = surrogates.decode('⬇')
 
 router: Router = Router()
 
@@ -36,4 +40,4 @@ async def command_start(message: Message):
 
 @router.message(Text(text='Правила'))
 async def command_help(message: Message):
-    await message.answer(f"{answers['help']}")
+    await message.answer(f"{answers['help']}{arrow}", reply_markup=keyboard)
