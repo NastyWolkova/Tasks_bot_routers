@@ -24,16 +24,17 @@ async def get_answer(message: Message):
                     #начисление баллов
                     users[message.from_user.id]['total_score'] += tasks[users[message.from_user.id]['current_task']][2]
                 #check on last task
-                delta_time = users[message.from_user.id]["finish_time"] - datetime.datetime.today()
+                spare_time = users[message.from_user.id]["finish_time"] - datetime.datetime.today()
+                elapsed_time = datetime.datetime.today() - users[message.from_user.id]['start_time']
                 if users[message.from_user.id]['current_task'] == list(tasks.keys())[-1]:
                     users[message.from_user.id]['current_task'] = 0
                     await message.answer(f'{answers["last_task"]} {users[message.from_user.id]["total_score"]}'
-                                         f'\nВремя тестирования: {str(delta_time).split(":")[1].lstrip("0")} мин. {round(float(str(delta_time).split(":")[-1]))} сек.')
+                                         f'\nВремя тестирования: {str(elapsed_time).split(":")[1].lstrip("0")} мин. {round(float(str(elapsed_time).split(":")[-1]))} сек.')
                 else:
                     #send next task
                     users[message.from_user.id]['current_task'] += 1
                     await message.answer(f'{answers["next_task"]} {users[message.from_user.id]["current_task"]}:\n{tasks[users[message.from_user.id]["current_task"]][0]}'
-                                         f'\nУ вас осталось: {str(delta_time).split(":")[1].lstrip("0")} мин. {round(float(str(delta_time).split(":")[-1]))} сек.')
+                                         f'\nУ вас осталось: {str(spare_time).split(":")[1].lstrip("0")} мин. {round(float(str(spare_time).split(":")[-1]))} сек.')
 
 @router.message()
 async def send_task(message: Message):
