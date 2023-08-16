@@ -10,7 +10,7 @@ async def main():
     # Загружаем конфиг в переменную config
     config: Config = load_config('.env')
     # Инициализируем бот и диспетчер
-    bot: Bot = Bot(token=config.tg_bot.token)
+    bot: Bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
     dp: Dispatcher = Dispatcher()
 
 
